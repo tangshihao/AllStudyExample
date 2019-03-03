@@ -53,6 +53,16 @@ public class ZookeeperOperates implements Watcher {
         return data;
     }
 
+    //同步修改节点数据
+    public void setData(String path, String data, int version) throws KeeperException, InterruptedException {
+        zooKeeper.setData(path, data.getBytes(), version);
+    }
+
+    //异步修改数据
+    public void setDataAsyn(String path, byte[] data, int version) {
+        zooKeeper.setData(path, data, version, new ZookeeperSetCallBack(), "Set data");
+    }
+
     public void getDataAsyn(String path, boolean watch) throws KeeperException, InterruptedException {
         zooKeeper.getData(path, watch, new ZookeeperDataCallBack(), stat);
     }
@@ -141,6 +151,14 @@ public class ZookeeperOperates implements Watcher {
         public void processResult(int i, String s, Object o, byte[] bytes, Stat stat) {
             System.out.println(String.format("code: %s, param: %s, ctx: %s, name: %s",
                     i, s, o, new String(bytes)));
+        }
+    }
+
+    private class ZookeeperSetCallBack implements AsyncCallback.StatCallback {
+
+        public void processResult(int i, String s, Object o, Stat stat) {
+            System.out.println(String.format("code: %s, param: %s, ctx: %s, stat: %s",
+                    i, s, o, stat));
         }
     }
 

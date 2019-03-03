@@ -78,4 +78,14 @@ public class ZookeeperOperatesTest {
         System.out.println(ZookeeperOperates.print(result));
         Thread.sleep(Integer.MAX_VALUE);
     }
+
+    @Test
+    public void testSetData() throws KeeperException, InterruptedException {
+        zo.setData("/test1", "111", 0);
+    }
+
+    @Test
+    public void testSetDataAsyn() throws KeeperException, InterruptedException {
+        zo.setData("test1", "122", 0);
+    }
 }

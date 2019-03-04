@@ -21,5 +21,9 @@
     <orderEntry type="library" name="Maven: org.apache.yetus:audience-annotations:0.5.0" level="project" />
     <orderEntry type="library" name="Maven: io.netty:netty:3.10.6.Final" level="project" />
     <orderEntry type="library" name="Maven: com.101tec:zkclient:0.10" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.curator:curator-recipes:2.4.2" level="project" />
+    <orderEntry type="library" name="Maven: com.google.guava:guava:14.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.curator:curator-framework:2.4.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.curator:curator-client:2.4.2" level="project" />
   </component>
 </module>

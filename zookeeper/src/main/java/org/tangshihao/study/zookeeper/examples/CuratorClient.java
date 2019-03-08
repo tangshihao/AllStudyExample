@@ -4,8 +4,9 @@ import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.api.BackgroundCallback;
 import org.apache.curator.framework.api.CuratorEvent;
-import org.apache.curator.framework.recipes.cache.NodeCache;
-import org.apache.curator.framework.recipes.cache.NodeCacheListener;
+import org.apache.curator.framework.recipes.cache.*;
+import org.apache.curator.framework.recipes.leader.LeaderSelector;
+import org.apache.curator.framework.recipes.leader.LeaderSelectorListenerAdapter;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.zookeeper.CreateMode;
 
@@ -85,6 +86,41 @@ public class CuratorClient {
         return new String(getData(path));
     }
 
+    //监听子节点变化
+    public void listenChildren(String path) throws Exception {
+        //true表示缓存数据value
+        PathChildrenCache pcc = new PathChildrenCache(client, path, true);
+        pcc.start();
+        pcc.getListenable().addListener(new ChildrenListener());
+    }
+
+    //master选举
+    public void selectMaster1() {
+        LeaderSelector ls = new LeaderSelector(client, "/master", new LeaderSelectorListenerAdapter() {
+            public void takeLeadership(CuratorFramework curatorFramework) throws Exception {
+                System.out.println("11成为了master角色");
+                Thread.sleep(3000);
+                System.out.println("释放掉master权利");
+            }
+        });
+//        ls.autoRequeue();
+        ls.start();
+    }
+
+    //master选举
+    public void selectMaster2() {
+        LeaderSelector ls = new LeaderSelector(client, "/master", new LeaderSelectorListenerAdapter() {
+            public void takeLeadership(CuratorFramework curatorFramework) throws Exception {
+                System.out.println("12成为了master角色");
+                Thread.sleep(3000);
+                System.out.println("释放掉master权利");
+            }
+        });
+        //自动重排队，会多次重复竞争master
+//        ls.autoRequeue();
+        ls.start();
+    }
+
     private class CallBackForCurator implements BackgroundCallback {
 
         public void processResult(CuratorFramework curatorFramework, CuratorEvent curatorEvent) throws Exception {
@@ -92,10 +128,33 @@ public class CuratorClient {
         }
     }
 
+    //监听节点变化的类
     private class CuratorListener implements NodeCacheListener {
 
         public void nodeChanged() throws Exception {
 
+        }
+    }
+
+    //监听
+    private class ChildrenListener implements PathChildrenCacheListener {
+
+        public void childEvent(CuratorFramework curatorFramework, PathChildrenCacheEvent pathChildrenCacheEvent) throws Exception {
+            switch (pathChildrenCacheEvent.getType()) {
+                case CHILD_ADDED:
+                    System.out.println(String.format("添加了新的子节点：%s",
+                            pathChildrenCacheEvent.getData().getPath(),
+                            new String(pathChildrenCacheEvent.getData().getData())));
+                    break;
+                case CHILD_REMOVED:
+                    System.out.println(String.format("节点%s已经被移除", pathChildrenCacheEvent.getData().getPath()));
+                    break;
+                case CHILD_UPDATED:
+                    System.out.println(String.format("节点%s的值被改变，变为%s", pathChildrenCacheEvent.getData().getPath(),
+                            new String(pathChildrenCacheEvent.getData().getData())));
+                    break;
+                default:
+            }
         }
     }
 }

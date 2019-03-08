@@ -12,6 +12,7 @@
         <module>zookeeper</module>
         <module>JunitTest</module>
         <module>springboot</module>
+        <module>net</module>
     </modules>
 
 

@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="JunitTest" />
+        <module name="net" />
         <module name="springboot" />
         <module name="zookeeper" />
       </profile>
@@ -14,6 +15,7 @@
     <bytecodeTargetLevel>
       <module name="AllStudyExample" target="1.5" />
       <module name="JunitTest" target="1.5" />
+      <module name="net" target="1.5" />
       <module name="springboot" target="1.5" />
       <module name="zookeeper" target="1.5" />
     </bytecodeTargetLevel>

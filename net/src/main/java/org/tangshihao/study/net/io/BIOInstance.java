@@ -6,6 +6,11 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * BIO是阻塞IO，在这种方式下，客户端每发送一个请求，服务端都必须创建一个线程来处理该请求。
+ * 也就是说客户端发送多少请求，服务端就创建多少个线程处理。该网络IO的缺点很明显，无法支持大并发
+ * 的应用场景。
+ */
 public class BIOInstance {
     //这是一个BIO的网络编程例子，阻塞式IO是指在IO的时候是同步的，必须要等IO过程结束才能执行下一步
     private class Server extends Thread {

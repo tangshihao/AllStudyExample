@@ -3,6 +3,7 @@ package org.tangshihao.study.zookeeper.examples;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.omg.CORBA.INTERNAL;
 
 public class CuratorClientTest {
     private CuratorClient cc = null;
@@ -25,7 +26,8 @@ public class CuratorClientTest {
 
     @Test
     public void create2() throws Exception {
-        cc.createEphemeral("/test1/tt2", "222");
+        cc.createEphemeral("/test1/tt4", "222");
+        Thread.sleep(Integer.MAX_VALUE);
     }
 
     @Test
@@ -54,6 +56,11 @@ public class CuratorClientTest {
     public void listenChildChanges() throws Exception {
         cc.listenChildren("/test1");
         Thread.sleep(Integer.MAX_VALUE);
+    }
+
+    @Test
+    public void createSequential() throws Exception {
+        cc.createSequential("/seq/id-", "123");
     }
 
     public static void main(String[] args) throws InterruptedException {

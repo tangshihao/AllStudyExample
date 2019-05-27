@@ -43,6 +43,11 @@ public class CuratorClient {
         client.create().withMode(CreateMode.EPHEMERAL).forPath(path, data.getBytes());
     }
 
+    //创建永久顺序节点
+    public void createSequential(String path, String data) throws Exception {
+        client.create().withMode(CreateMode.PERSISTENT_SEQUENTIAL).forPath(path, data.getBytes());
+    }
+
     //创建临时节点，并可递归创建父节点
     public void createParentsIfNeeded(String path, String data) throws Exception {
         client.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL).forPath(path, data.getBytes());

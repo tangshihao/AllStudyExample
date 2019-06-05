@@ -7,6 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.Enumeration;
+
+
 @Api(value="测试模块")
 @RestController
 @RequestMapping("test")
@@ -22,5 +27,29 @@ public class TestController {
     @GetMapping("test2")
     public String test2(@RequestParam("content") String content) {
         return content;
+    }
+
+    @ApiOperation(value = "测试接口3", notes = "session参数")
+    @GetMapping("test3")
+    public void test3(HttpServletRequest req) {
+        // 可以获取请求头等信息，还有session等信息
+        Enumeration<String> headerNames = req.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            String headerName = headerNames.nextElement();
+            System.out.println(headerName + ":" + req.getHeader(headerName));
+        }
+    }
+
+    @ApiOperation(value = "测试接口4", notes = "测试session")
+    @GetMapping("test4")
+    public void test4(HttpServletRequest req) {
+        HttpSession httpSession = req.getSession();
+        httpSession.setAttribute("name", "lilee");
+    }
+
+    @ApiOperation(value = "测试接口5", notes = "测试session")
+    @GetMapping("test5")
+    public String test5(HttpServletRequest req) {
+        return (String)req.getSession().getAttribute("name");
     }
 }

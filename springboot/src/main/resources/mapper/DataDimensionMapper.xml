@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="org.tsh.study.mybatis.dao.DataDimensionMapper">
-    <insert id="insert" parameterType="org.tsh.study.mybatis.entity.DataDimension">
+<mapper namespace="org.tangshihao.study.springboot.dao.DataDimensionMapper">
+    <insert id="insert" parameterType="org.tangshihao.study.springboot.entity.DataDimension">
         INSERT INTO DE_DATA_DIMENSION(DIMENSION_SOURCE,DIMENSION_NAME,DEPART_ID,DIMENSION_ID)
         VALUES(#{dimensionSource},#{dimensionName},#{departId},#{dimensionId})
     </insert>

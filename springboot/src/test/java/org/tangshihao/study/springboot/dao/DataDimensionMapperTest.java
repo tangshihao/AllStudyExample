@@ -24,5 +24,6 @@ public class DataDimensionMapperTest {
     public void test() {
         System.out.println("yes");
         System.out.println("nn");
+        System.out.println("ff");
     }
 }

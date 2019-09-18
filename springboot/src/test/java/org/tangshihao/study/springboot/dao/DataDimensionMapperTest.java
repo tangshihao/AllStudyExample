@@ -23,6 +23,6 @@ public class DataDimensionMapperTest {
     @Test
     public void test() {
         System.out.println("yes");
-        System.out.println("no");
+        System.out.println("n");
     }
 }
